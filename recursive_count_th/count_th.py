@@ -6,6 +6,10 @@ Your function must utilize recursion. It cannot contain any loops.
 
 
 def count_th(word):
+    # base case
+    if len(word) < 2:
+        return 0
+
     if 'th' in word:
         if word[:2] == 'th':
             return count_th(word[2:]) + 1
