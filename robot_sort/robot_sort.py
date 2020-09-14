@@ -106,6 +106,38 @@ class SortingRobot:
           * You may NOT use any Python libraries or class methods. (`sorted()`, etc.)
           * You may define robot helper methods, as long as they follow all the rules.
         """
+        self.set_light_on()  # turn light on at start of loop
+        while self.light_is_on():  # start looping while light is set to on position
+            self.set_light_off()
+
+            while self.can_move_right():  # check if robot can move right and move if possible.
+                self.swap_item()  # grab item
+                self.move_right()  # move forward in loop
+
+                # perform check between current item and item in next position(room).
+                # if compare_item = 1, the item robot is holding is bigger than item to right in next position(room)
+                if self.compare_item() == 1:
+                    self.swap_item()  # swap for smaller item
+
+                # if check above passes and robot is holding smallest item so far,
+                # move left but continue trying to check and move right
+                self.move_left()
+                self.swap_item()  # swap for smaller item
+                self.move_right()
+
+            while self.can_move_left():
+                self.swap_item()  # grab item
+                self.move_left()  # move forward in loop
+
+                # perform check between current item and item in next position(room).
+                # if compare_item = -1, the item to the right position(room) is smaller than item to left in next position(room)
+                if self.compare_item() == -1:
+                    self.swap_item()  # swap for smaller item
+                    self.set_light_on()  # turn light back on and finish loop
+
+                self.move_right()
+                self.swap_item()  # swap for smaller item
+                self.move_left()
 
 
 if __name__ == "__main__":
